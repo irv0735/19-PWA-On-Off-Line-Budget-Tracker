@@ -3,10 +3,10 @@ const FILES_TO_CACHE = [
   "/index.html",
   "/style.css",
   "/dist/bundle.js",
-
+  "/dist/manifest.json",
   "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
-  "/icons/icon-192x192.png",
-  "/icons/icon-512x512.png"
+  "/dist/icon-192x192.png",
+  "/dist/icon-512x512.png"
 ];
 
 const STATIC_CACHE = "static-cache-v1";
