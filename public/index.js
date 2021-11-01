@@ -1,3 +1,5 @@
+import saveRecord from "./indexedDB";
+
 let transactions = [];
 let myChart;
 
@@ -13,47 +15,6 @@ fetch("/api/transaction")
     populateTable();
     populateChart();
   });
-
-// Access the indexedDB when offline
-function indexedRecord(method, transaction) {
-  return new Promise((resolve, reject) => {
-    const request = window.indexedDB.open("budget", 1);
-    let db,
-      tx,
-      store;
-
-    request.onupgradeneeded = function(e) {
-      const db = request.result;
-      db.createObjectStore("transactionStore", { keyPath: "_id" });
-    };
-
-    request.onerror = function(e) {
-      console.log("There was an error");
-    };
-
-    request.onsuccess = function(e) {
-      db = request.result;
-      tx = db.transaction("transactionStore", "readwrite");
-      store = tx.objectStore("transactionStore");
-
-      db.onerror = function(e) {
-        console.log("error");
-      };
-      if (method === 'post') {
-        store.add(transaction)
-      }
-      if (method === 'get') {
-        const all = store.getAll();
-        all.onsuccess = function() {
-          resolve(all.result);
-        };
-      }
-      tx.oncomplete = function() {
-        db.close();
-      };
-    };
-  });
-}
 
 function populateTotal() {
   // reduce transaction amounts to a single total value
@@ -177,7 +138,7 @@ function sendTransaction(isAdding) {
   })
   .catch(err => {
     // fetch failed, so save in indexed db
-    indexedRecord('post', transaction);
+    saveRecord(transaction);
 
     // clear form
     nameEl.value = "";
@@ -193,8 +154,4 @@ document.querySelector("#sub-btn").onclick = function() {
   sendTransaction(false);
 };
 
-indexedRecord('get').then(results => {
-  results.forEach(expense => {
-    transactions.push(expense);
-  });
-});
+
