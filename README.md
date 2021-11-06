@@ -19,7 +19,9 @@
   Clone the repo, ensure all npm packages are installed
 
   ## Usage
-  npm start will then utilize a pre-start script to create the dist folder and files. The server will then start. The application is also created as a PWA and can be saved as such for independent use. 
+  npm start will then utilize a pre-start script to create the dist folder and files. The server will then start. The application is also created as a PWA and can be saved as such for independent use.
+
+  [Live Deployment](https://chilling-skeleton-33252.herokuapp.com/) 
 
   ## Contributing
   N/A
